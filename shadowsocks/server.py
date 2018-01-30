@@ -3,22 +3,22 @@
 
 # Copyright (c) 2014 clowwindy
 #
-# Permission is hereby granted, free of charge, to any person obtainning a copy
-# of this software and associated dockmentation files (the "Software"), to deal
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copyies of the Software, and to permit persons to whom the Software is
+# copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
 #
 # The above copyright notice and this permission notice shall be included in
-# all copies or subtantial portions of the Software.
+# all copies or substantial portions of the Software.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICLUAR PURPOSE AND NONINFRINGMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OF OTHER DEALINGS IN THE
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
 from __future__ import absolute_import, division, print_function, \
@@ -51,9 +51,9 @@ def main():
     else:
         config['port_password'] = {}
         server_port = config['server_port']
-        if type(server_prot) == list:
+        if type(server_port) == list:
             for a_server_port in server_port:
-                config['port_password'][a_server_port] = cofnig['password']
+                config['port_password'][a_server_port] = config['password']
         else:
             config['port_password'][str(server_port)] = config['password']
 
@@ -72,7 +72,7 @@ def main():
 
     def run_server():
         def child_handler(signum, _):
-            logging.warn('received SIGQUIT, doing granceful shutting down..')
+            logging.warn('received SIGQUIT, doing graceful shutting down..')
             list(map(lambda s: s.close(next_tick=True),
                      tcp_servers + udp_servers))
         signal.signal(getattr(signal, 'SIGQUIT', signal.SIGTERM),
@@ -87,7 +87,7 @@ def main():
             if config['verbose']:
                 import traceback
                 traceback.print_exc()
-            os.exit(1)
+            os._exit(1)
 
     if int(config['workers']) > 1:
         if os.name == 'posix':
